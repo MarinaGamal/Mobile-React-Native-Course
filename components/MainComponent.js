@@ -8,7 +8,24 @@ import { Icon } from 'react-native-elements';
 import Home from './HomeComponent';
 import About from './AboutComponent'
 import ContactUs from './ContactComponent'
+import { connect } from 'react-redux';
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 
+const mapStateToProps = state => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+})
 
 const HomeNavigator = createStackNavigator({
   Home: { screen: Home }
@@ -171,16 +188,13 @@ const MainNavigator = createDrawerNavigator({
 });
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dishes: DISHES,
-      selectedDish: null
-    };
+
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
-  onDishSelect(dishId) {
-    this.setState({selectedDish: dishId})
-}
   render() {
  
     return (
@@ -215,4 +229,4 @@ const styles = StyleSheet.create({
     height: 60
   }
 });
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
