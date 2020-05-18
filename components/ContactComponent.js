@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import { Text} from 'react-native';
 import { Card } from 'react-native-elements';
 import {CONTACT} from '../shared/contact';
-
+import * as Animatable from 'react-native-animatable';
 
 function RenderItem(props) {
     
         const item = props.item;
         
             return(
-                <Card
-                    title={item.title}>
-                    <Text
-                        style={{margin: 10}}>
-                        {item.details}</Text>
-                </Card>
+                <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>      
+                    <Card
+                        title={item.title}>
+                        <Text
+                            style={{margin: 10}}>
+                            {item.details}</Text>
+                    </Card>
+                </Animatable.View>
             );
 }
 

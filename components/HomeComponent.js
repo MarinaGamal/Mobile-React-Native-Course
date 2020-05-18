@@ -46,6 +46,9 @@ class Home extends Component {
     super(props);
     this.animatedValue = new Animated.Value(0);        
   }
+  static navigationOptions = {
+    title: "Home"
+  };
 
   componentDidMount () {
     this.animate()
@@ -61,9 +64,6 @@ class Home extends Component {
       }
     ).start(() => this.animate())
   }
-  static navigationOptions = {
-    title: "Home"
-  };
 
   render() {
     const xpos1 = this.animatedValue.interpolate({
