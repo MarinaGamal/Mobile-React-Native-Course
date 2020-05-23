@@ -29,7 +29,12 @@ function RenderDish(props) {
         return true;
     else
         return false;
-}
+  }
+  const recognizeComment = ({ dx }) => {
+    if (dx > 200) return true; 
+    return false;
+  };
+
 
 const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: (e, gestureState) => {
@@ -38,7 +43,7 @@ const panResponder = PanResponder.create({
     onPanResponderGrant: () => {this.view.rubberBand(1000).then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));},
     onPanResponderEnd: (e, gestureState) => {
         console.log("pan responder end", gestureState);
-        if (recognizeDrag(gestureState))
+        if (recognizeDrag(gestureState)){
             Alert.alert(
                 'Add Favorite',
                 'Are you sure you wish to add ' + dish.name + ' to favorite?',
@@ -48,6 +53,10 @@ const panResponder = PanResponder.create({
                 ],
                 { cancelable: false }
             );
+        }
+        else if (recognizeComment(gestureState)) {
+            openCommentForm();
+        }
 
         return true;
     }
